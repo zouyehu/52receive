@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+         http://www.springframework.org/schema/beans/spring-beans.xsd  
+         http://www.springframework.org/schema/context  
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- spring KafkaTemplate所需参数 -->
+	<bean id="producerProperties" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="bootstrap.servers" value="${kafkaTemplate.bootstrap.servers}" />
+				<entry key="group.id" value="${kafkaTemplate.group.id}" />
+				<entry key="batch.size" value="${kafkaTemplate.batch.size}" />
+				<entry key="buffer.memory" value="${kafkaTemplate.buffer.memory}" />
+				<entry key="max.block.ms" value="${kafkaTemplate.max.block.ms}" />
+				<entry key="key.serializer" value="${kafkaTemplate.key.serializer}" />
+				<entry key="value.serializer" value="${kafkaTemplate.value.serializer}" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="producerFactory" class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
+		<constructor-arg>
+			<ref bean="producerProperties" />
+		</constructor-arg>
+	</bean>
+
+	<!-- KafkaTemplate注入 -->
+	<bean id="kafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+		<constructor-arg ref="producerFactory" />
+		<constructor-arg name="autoFlush" value="${kafkaTemplate.autoFlush}" />
+	</bean>
+	
+	<!-- kafka-client消费端配置，订阅方式消费消息，可同时订阅多个主题 -->
+	<!-- 不支持并发操作，每次生成新对象 -->
+	<bean id="consumerSubscribe" class="org.apache.kafka.clients.consumer.KafkaConsumer" scope="prototype">
+		<constructor-arg>
+			<props>
+				<prop key="bootstrap.servers">${consumer.subscribe.bootstrap.servers}</prop>
+				<prop key="group.id">${consumer.subscribe.group.id}</prop>
+				<prop key="enable.auto.commit">${consumer.subscribe.enable.auto.commit}</prop>
+				<prop key="auto.commit.interval.ms">${consumer.subscribe.auto.commit.interval.ms}</prop>
+				<prop key="auto.offset.reset">${consumer.subscribe.auto.offset.reset}</prop>
+				<prop key="session.timeout.ms">${consumer.subscribe.session.timeout.ms}</prop>
+				<prop key="max.poll.records">${consumer.subscribe.max.poll.records}</prop>
+				<prop key="key.deserializer">${consumer.subscribe.key.deserializer}</prop>
+				<prop key="value.deserializer">${consumer.subscribe.value.deserializer}</prop>
+			</props>
+		</constructor-arg>
+	</bean>
+	
+	<!-- kafka-client消费端配置，非订阅方式消费消息，针对单个主题 -->
+	<!-- 不支持并发操作，每次生成新对象 -->
+	<bean id="consumer" class="org.apache.kafka.clients.consumer.KafkaConsumer" scope="prototype">
+		<constructor-arg>
+			<props>
+				<prop key="bootstrap.servers">${consumer.bootstrap.servers}</prop>
+				<prop key="enable.auto.commit">${consumer.enable.auto.commit}</prop>
+				<prop key="auto.commit.interval.ms">${consumer.auto.commit.interval.ms}</prop>
+				<prop key="auto.offset.reset">${consumer.auto.offset.reset}</prop>
+				<prop key="session.timeout.ms">${consumer.session.timeout.ms}</prop>
+				<prop key="max.poll.records">${consumer.max.poll.records}</prop>
+				<prop key="key.deserializer">${consumer.key.deserializer}</prop>
+				<prop key="value.deserializer">${consumer.value.deserializer}</prop>
+				<prop key="request.timeout.ms">${consumer.request.timeout.ms}</prop>
+			</props>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="zkConnection" class="org.I0Itec.zkclient.ZkConnection">
+		<constructor-arg name="zkServers" value="${zookeeper.url}" />
+		<constructor-arg name="sessionTimeOut" value="${zookeeper.sessionTimeout}" />
+	</bean>
+	
+	<bean id="zkClient" class="org.I0Itec.zkclient.ZkClient">
+		<constructor-arg name="connection" ref="zkConnection" />
+		<constructor-arg name="connectionTimeout" value="${zookeeper.connectionTimeout}" />
+	</bean>
+	
+	<bean id="kafkaDao" class="com.winnerlook.framework.kafka.dao.impl.KafkaDaoImpl">
+		<property name="kafkaTemplate" ref="kafkaTemplate" />
+		<property name="zkClient" ref="zkClient" />
+	</bean>
+	
+</beans>

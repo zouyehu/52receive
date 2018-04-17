@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dubbo框架核心配置 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:noNamespaceSchemaLocation="classpath:xsd/dubbo.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd   
+    http://www.springframework.org/schema/tx   
+    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd  
+    http://www.springframework.org/schema/aop  
+   	http://www.springframework.org/schema/aop/spring-aop.xsd
+   	http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- 应用信息，用于计算依赖关系 majun 2014-09-28 -->
+	<dubbo:application name="${dubbo.application}" />
+	
+	<!-- 用dubbo协议在20880端口暴露服务 majun 2014-09-28 -->
+    <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" />
+    
+    <!-- 使用zookeeper注册中心进行注册  majun 2014-09-28 -->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" client="zkclient" 
+    	file="${user.home}/output/${dubbo.application}/dubbo.cache"/>
+    
+    <!-- provider全局配置 majun 2014-09-28 -->
+    <dubbo:provider retries="${dubbo.provider.retries}" timeout="${dubbo.provider.timeout}"  
+    	loadbalance="${dubbo.provider.loadbalance}"/>
+    	
+    <!-- <dubbo:monitor protocol="registry" /> -->
+</beans>    

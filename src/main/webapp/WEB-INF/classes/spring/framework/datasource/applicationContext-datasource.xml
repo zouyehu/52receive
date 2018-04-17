@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd   
+    http://www.springframework.org/schema/tx   
+    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd  
+    http://www.springframework.org/schema/aop  
+   	http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<!-- 主数据源，使用alibaba druid连接池 majun 2014-09-28 -->
+	<bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="name" value="${master.name}"/>
+		<property name="url" value="${master.url}"/>
+		<property name="username" value="${master.username}"/>
+		<property name="password" value="${master.password}"/>
+		<property name="driverClassName" value="${master.driverClassName}"/>
+		<property name="initialSize" value="${master.initialSize}"/>
+		<property name="maxActive" value="${master.maxActive}"/>
+		<property name="minIdle" value="${master.minIdle}"/>
+		<property name="maxWait" value="${master.maxWait}"/>
+		<property name="useUnfairLock" value="${master.useUnfairLock}"/>
+		<property name="validationQuery" value="${master.validationQuery}"/>
+		<property name="testOnBorrow" value="${master.testOnBorrow}"/>
+		<property name="testOnReturn" value="${master.testOnReturn}"/>
+		<property name="testWhileIdle" value="${master.testWhileIdle}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${master.timeBetweenEvictionRunsMillis}"/>
+		<property name="minEvictableIdleTimeMillis" value="${master.minEvictableIdleTimeMillis}"/>
+		<property name="filters" value="${master.filters}" />   
+	</bean>
+
+<!-- 	<bean id="masterDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">     -->
+<!--        <property name="driverClassName">   -->
+<!--             <value>${master.driverClassName}</value>   -->
+<!--         </property>   -->
+<!--         <property name="url">   -->
+<!--             <value>${master.url}</value>   -->
+<!--         </property>   -->
+<!--         <property name="username">   -->
+<!--             <value>${master.username}</value>   -->
+<!--         </property>   -->
+<!--         <property name="password">   -->
+<!--             <value>${master.password}</value>   -->
+<!--         </property>   -->
+          
+<!--     </bean>  -->
+	<!-- 订单数据源，使用alibaba druid连接池 majun 2014-09-28 -->
+<!-- 	<bean id="sendDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> -->
+<!-- 		<property name="name" value="${send.name}"/> -->
+<!-- 		<property name="url" value="${send.url}"/> -->
+<!-- 		<property name="username" value="${send.username}"/> -->
+<!-- 		<property name="password" value="${send.password}"/> -->
+<!-- 		<property name="driverClassName" value="${send.driverClassName}"/> -->
+<!-- 		<property name="initialSize" value="${send.initialSize}"/> -->
+<!-- 		<property name="maxActive" value="${send.maxActive}"/> -->
+<!-- 		<property name="minIdle" value="${send.minIdle}"/> -->
+<!-- 		<property name="maxWait" value="${send.maxWait}"/> -->
+<!-- 		<property name="useUnfairLock" value="${send.useUnfairLock}"/> -->
+<!-- 		<property name="validationQuery" value="${send.validationQuery}"/> -->
+<!-- 		<property name="testOnBorrow" value="${send.testOnBorrow}"/> -->
+<!-- 		<property name="testOnReturn" value="${send.testOnReturn}"/> -->
+<!-- 		<property name="testWhileIdle" value="${send.testWhileIdle}"/> -->
+<!-- 		<property name="timeBetweenEvictionRunsMillis" value="${send.timeBetweenEvictionRunsMillis}"/> -->
+<!-- 		<property name="minEvictableIdleTimeMillis" value="${send.minEvictableIdleTimeMillis}"/> -->
+<!-- 		<property name="filters" value="${send.filters}" />  -->
+<!-- 	</bean> -->
+	
+	<!-- 活动数据源，使用alibaba druid连接池 majun 2014-09-28 -->
+<!-- 	<bean id="winnerDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> -->
+<!-- 		<property name="name" value="${winner.name}"/> -->
+<!-- 		<property name="url" value="${winner.url}"/> -->
+<!-- 		<property name="username" value="${winner.username}"/> -->
+<!-- 		<property name="password" value="${winner.password}"/> -->
+<!-- 		<property name="driverClassName" value="${winner.driverClassName}"/> -->
+<!-- 		<property name="initialSize" value="${winner.initialSize}"/> -->
+<!-- 		<property name="maxActive" value="${winner.maxActive}"/> -->
+<!-- 		<property name="minIdle" value="${winner.minIdle}"/> -->
+<!-- 		<property name="maxWait" value="${winner.maxWait}"/> -->
+<!-- 		<property name="useUnfairLock" value="${winner.useUnfairLock}"/> -->
+<!-- 		<property name="validationQuery" value="${winner.validationQuery}"/> -->
+<!-- 		<property name="testOnBorrow" value="${winner.testOnBorrow}"/> -->
+<!-- 		<property name="testOnReturn" value="${winner.testOnReturn}"/> -->
+<!-- 		<property name="testWhileIdle" value="${winner.testWhileIdle}"/> -->
+<!-- 		<property name="timeBetweenEvictionRunsMillis" value="${winner.timeBetweenEvictionRunsMillis}"/> -->
+<!-- 		<property name="minEvictableIdleTimeMillis" value="${winner.minEvictableIdleTimeMillis}"/> -->
+<!-- 		<property name="filters" value="${winner.filters}" /> -->
+<!-- 	</bean> -->
+	
+	<!-- 预留数据源，使用alibaba druid连接池 majun 2014-09-28 -->
+	<!-- <bean id="reserveDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="name" value="${reserve.name}"/>
+		<property name="url" value="${reserve.url}"/>
+		<property name="username" value="${reserve.username}"/>
+		<property name="password" value="${reserve.password}"/>
+		<property name="driverClassName" value="${reserve.driverClassName}"/>
+		<property name="initialSize" value="${reserve.initialSize}"/>
+		<property name="maxActive" value="${reserve.maxActive}"/>
+		<property name="minIdle" value="${reserve.minIdle}"/>
+		<property name="maxWait" value="${reserve.maxWait}"/>
+		<property name="useUnfairLock" value="${reserve.useUnfairLock}"/>
+		<property name="validationQuery" value="${reserve.validationQuery}"/>
+		<property name="testOnBorrow" value="${reserve.testOnBorrow}"/>
+		<property name="testOnReturn" value="${reserve.testOnReturn}"/>
+		<property name="testWhileIdle" value="${reserve.testWhileIdle}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${reserve.timeBetweenEvictionRunsMillis}"/>
+		<property name="minEvictableIdleTimeMillis" value="${reserve.minEvictableIdleTimeMillis}"/>
+		<property name="filters" value="${reserve.filters}" />
+	</bean> -->
+	
+	<!-- <bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="name" value="${slave.name}"/>
+		<property name="url" value="${slave.url}"/>
+		<property name="username" value="${slave.username}"/>
+		<property name="password" value="${slave.password}"/>
+		<property name="driverClassName" value="${slave.driverClassName}"/>
+		<property name="initialSize" value="${slave.initialSize}"/>
+		<property name="maxActive" value="${slave.maxActive}"/>
+		<property name="minIdle" value="${slave.minIdle}"/>
+		<property name="maxWait" value="${slave.maxWait}"/>
+		<property name="useUnfairLock" value="${slave.useUnfairLock}"/>
+		<property name="validationQuery" value="${slave.validationQuery}"/>
+		<property name="testOnBorrow" value="${slave.testOnBorrow}"/>
+		<property name="testOnReturn" value="${slave.testOnReturn}"/>
+		<property name="testWhileIdle" value="${slave.testWhileIdle}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${slave.timeBetweenEvictionRunsMillis}"/>
+		<property name="minEvictableIdleTimeMillis" value="${slave.minEvictableIdleTimeMillis}"/>
+		<property name="filters" value="${slave.filters}" /> 
+	</bean> -->
+	
+	<!-- 天猫订单数据源  -->
+	<!-- <bean id="sysInfoDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="name" value="${sysInfo.name}"/>
+		<property name="url" value="${sysInfo.url}"/>
+		<property name="username" value="${sysInfo.username}"/>
+		<property name="password" value="${sysInfo.password}"/>
+		<property name="driverClassName" value="${sysInfo.driverClassName}"/>
+		<property name="initialSize" value="${sysInfo.initialSize}"/>
+		<property name="maxActive" value="${sysInfo.maxActive}"/>
+		<property name="minIdle" value="${sysInfo.minIdle}"/>
+		<property name="maxWait" value="${sysInfo.maxWait}"/>
+		<property name="useUnfairLock" value="${sysInfo.useUnfairLock}"/>
+		<property name="validationQuery" value="${sysInfo.validationQuery}"/>
+		<property name="testOnBorrow" value="${sysInfo.testOnBorrow}"/>
+		<property name="testOnReturn" value="${sysInfo.testOnReturn}"/>
+		<property name="testWhileIdle" value="${sysInfo.testWhileIdle}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${sysInfo.timeBetweenEvictionRunsMillis}"/>
+		<property name="minEvictableIdleTimeMillis" value="${sysInfo.minEvictableIdleTimeMillis}"/>
+		<property name="filters" value="${sysInfo.filters}" /> 
+	</bean>
+ -->
+	<!-- 总数据源 majun 2014-09-28 -->
+	<bean id="dataSource" class="com.winnerlook.framework.datasource.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="master" value-ref="masterDataSource" />
+<!-- 				 <entry key="send" value-ref="sendDataSource" /> -->
+<!-- 				 <entry key="winner" value-ref="winnerDataSource" /> -->
+				<!-- <entry key="order" value-ref="orderDataSource" />
+				<entry key="event" value-ref="eventDataSource" />
+				<entry key="reserve" value-ref="reserveDataSource" />
+				<entry key="slave" value-ref="slaveDataSource" />
+				<entry key="sysInfo" value-ref="sysInfoDataSource" /> -->
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="masterDataSource"></property>
+	</bean>
+	
+	<!-- 数据源Aspect majun 2014-09-28 -->
+	<bean id="dataSourceAspect" class="com.winnerlook.framework.datasource.DataSourceAspect" />
+	
+	<!-- 数据源AOP majun 2014-09-28 -->
+	<aop:config>
+		<aop:aspect order="1" ref="dataSourceAspect">
+			<!-- 由于业务日志是存储在MongoDB上故排除业务日志Service -->
+           <aop:pointcut id="dsPointCut" expression="execution(* com.winnerlook.kuailq..*Service.*(..))"/>
+           <aop:before pointcut-ref="dsPointCut" method="before"/>
+       </aop:aspect>
+	</aop:config>
+</beans>    

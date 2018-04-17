@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FTP相关配置 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- FTPClient相关配置参数 -->
+	<bean id="ftpClientUtil" class="com.winnerlook.util.FTPClientUtil">
+		<property name="host" value="${po.ftp.host}"/>
+		<property name="port" value="${po.ftp.port}"/>
+		<property name="username" value="${po.ftp.username}"/>
+		<property name="password" value="${po.ftp.password}"/>
+	</bean>
+	
+	<!-- FTPClient相关配置参数 -->
+<!-- 	<bean id="sftpClientUtil" class="com.rayoo.util.SFTPClientUtil">
+		<property name="host" value="${sftp.host}"/>
+		<property name="port" value="${sftp.port}"/>
+		<property name="username" value="${sftp.username}"/>
+		<property name="password" value="${sftp.password}"/>
+	</bean> -->
+	
+</beans>    
