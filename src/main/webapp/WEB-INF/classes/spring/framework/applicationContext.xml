@@ -18,19 +18,32 @@
 <!-- 	<context:component-scan base-package="com.winnerlook.kuailq.dao" /> -->
 	
 	<!-- 扫描web包，应用Spring的注解 @service -->
-<!-- 	<context:component-scan base-package="com.winnerlook.kuailq.service" /> -->
-    
+ 	<context:component-scan base-package="com.winnerlook.huzou.test" />
+	<!-- 支持上传文件 -->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- set the max upload size100MB -->
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>utf-8</value>
+		</property>
+	</bean>
 	<!-- 加载属性配置文件 majun 2014-11-04 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="fileEncoding" value="UTF-8" />
 		<property name="locations">
 			<list>
 				<value>classpath*:properties/datasource.properties</value>
-				<value>classpath*:properties/dubbo.properties</value>
-				<value>classpath*:properties/redis.properties</value>
-				<value>classpath*:properties/ftp.properties</value>
-				<value>classpath*:properties/kafka.properties</value>
-				<value>classpath*:properties/mongodb.properties</value>
+				<!--<value>classpath*:properties/dubbo.properties</value>-->
+				<!--<value>classpath*:properties/redis.properties</value>-->
+				<!--<value>classpath*:properties/ftp.properties</value>-->
+				<!--<value>classpath*:properties/kafka.properties</value>-->
+				<!--<value>classpath*:properties/mongodb.properties</value>-->
 			</list>
 		</property>
 	</bean>
@@ -61,22 +74,22 @@
 	<!-- 框架配置文件在此import majun 2014-11-04 -->
 	<import resource="classpath*:spring/framework/datasource/applicationContext-*.xml"/>
 	
-	<import resource="classpath*:spring/framework/dubbo/applicationContext-dubbo.xml"/>
+	<!--<import resource="classpath*:spring/framework/dubbo/applicationContext-dubbo.xml"/>-->
 	
 	<import resource="classpath*:spring/framework/mybatis/applicationContext-mybatis.xml"/>
 	
 <!-- 	<import resource="classpath*:spring/framework/redis/applicationContext-redis.xml"/> -->
 
-	<import resource="classpath*:spring/framework/redis/applicationContext-redis-transient.xml"/>
+	<!--<import resource="classpath*:spring/framework/redis/applicationContext-redis-transient.xml"/>-->
 	
-	<import resource="classpath*:spring/framework/ftp/applicationContext-ftp.xml" />
+	<!--<import resource="classpath*:spring/framework/ftp/applicationContext-ftp.xml" />-->
 	
-	<import resource="classpath*:spring/framework/kafka/applicationContext-kafka.xml"/>
+	<!--<import resource="classpath*:spring/framework/kafka/applicationContext-kafka.xml"/>-->
 	
-	<import resource="classpath*:spring/framework/mongodb/applicationContext-mongodb.xml"/>
+	<!--<import resource="classpath*:spring/framework/mongodb/applicationContext-mongodb.xml"/>-->
 
 	<import resource="classpath*:spring/framework/cxf/applicationContext-cxf.xml"/>
 	
-	<import resource="classpath*:spring/framework/startup/applicationContext-startup.xml"/>
+	<!--<import resource="classpath*:spring/framework/startup/applicationContext-startup.xml"/>-->
 	
 </beans>    
